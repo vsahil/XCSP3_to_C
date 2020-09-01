@@ -13,5 +13,5 @@ Our benchmarks are present in the `benchmarks` directory. The `extensional_bench
 
 ##Generating different versions of C code
 1. Line 267 in `XCSP3PrintCallbacks.h` declares a variable `run_klee`. This variable is set to 1 if code transformation is for KLEE and 0 if for LLBMC
-2. Line 268 declares a variable named `flag_extensional_benchmarks`, to decide the extensional version desired. The comments in the following lines help with the choice.
-3. Line 302 declares a variable named `flag_intensional_benchmarks`, to decide the intensional version desired. The comments in the following lines help with the choice
+2. Line 268 declares a variable named `flag_extensional_benchmarks`, to decide the extensional version desired. The comments in the following lines help with the choice. If an intensional benchmark is being run, set this to 0. 
+3. Line 302 declares a variable named `flag_intensional_benchmarks`, to decide the intensional version desired. The comments in the following lines help with the choice. If an extensional benchmark is being run, set this to 0. 
