@@ -2235,10 +2235,20 @@ void XCSP3PrintCallbacks::buildConstraintExtensionAs(string id, vector<XVariable
         if (flag_exten == 1 || flag_exten == 5)
             cout << "if(";
         else if (flag_exten == 11 || flag_exten == 12){
-            if(run_klee == 1)
-                cout << "klee_assume(";
-            else if(run_klee == 0)
-                cout << "__llbmc_assume(";
+            if(run_klee == 1) {
+                if (support) {
+                    cout << "klee_assume(";
+                } else {
+                    cout << "klee_assume(!(";
+                }
+            }
+            else if(run_klee == 0) {
+                if (support) {
+                    cout << "__llbmc_assume(";
+                } else {
+                    cout << "__llbmc_assume(!(";
+                }
+            }
             else assert(0);
         }   
         else assert(0);
@@ -2268,8 +2278,12 @@ void XCSP3PrintCallbacks::buildConstraintExtensionAs(string id, vector<XVariable
         
         if (flag_exten == 1 || flag_exten == 5)
             cout << " 0) " << endl;      // for the last "||"
-        else
-            cout << " 0); " << endl;      // for the last "||"
+        else {
+            if(support)
+                cout << " 0); " << endl;      // for the last "||"
+            else if(!support)
+                cout << " 0)); " << endl;      // for the last "||", 2 closing brackets here
+        }
         
         if (flag_exten == 1 || flag_exten == 5){
             if(!support){
